@@ -38,18 +38,19 @@ func main() {
 					fmt.Printf("prevent panic by handling failure accessing a path %q: %v\n", path, err)
 					return err
 				}
-
 				if info.IsDir() {
-					fmt.Printf("skipping a dir without errors: %+v \n", info.Name())
-					return filepath.SkipDir
+					//fmt.Printf("dir : %+v \n", info.Name())
+					return nil
 				}
 
-				fmt.Printf("visited file or dir: %q\n", path)
+				if match, _ := filepath.Match("*.go", info.Name()); match {
+					fmt.Printf("found : %s\n", path)
+				}
 				return nil
 			})
 
 			if err != nil {
-				return nil
+				return err
 			}
 			return nil
 		},
